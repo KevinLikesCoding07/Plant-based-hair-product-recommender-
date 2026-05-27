@@ -10,7 +10,7 @@ with col1:
 with col2:
     st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
 if "quiz_history" not in st.session_state:
-    st.session_state["quiz history"] = []
+    st.session_state["quiz_history"] = []
 with st.container(border=True):
     user_hair = st.selectbox(
         "Enter your hair type:",
@@ -80,7 +80,7 @@ def get_recommendation(hair, scalp, thickness, porosity):
 st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
-    final_product, final_brand = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
+    final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
     
     st.balloons()
     
@@ -91,7 +91,7 @@ if st.button("Find my perfect product", type="primary"):
     st.markdown(
        f"""
     <a href="{google_url}" target="_blank" style="text-decoration: none;">
-            <div style="background-color: #add8e6; color: yellow; padding: 15px 20px; text-align: center; border-radius: 5px; font-weight: bold; margin-top: 10px;">
+            <div style="background-color: #add8e6; color: black; padding: 15px 20px; text-align: center; border-radius: 5px; font-weight: bold; margin-top: 10px;">
                  Find {final_brand} {final_product} on Google
             </div>
         </a>
@@ -112,10 +112,10 @@ if st.button("Find my perfect product", type="primary"):
         st.subheader(" Session Comparison Matrix")
         st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
         df = pd.DataFrame(st.session_state["quiz_history"])
-        st.dataframe(df, use_container_width=True)
-        if st.button(" Clear Quiz History", type="secondary"):
-            st.session_state["quiz_history"] = []
-            st.rerun()
+    st.dataframe(df, use_container_width=True)
+    if st.button("Clear Quiz History", type="secondary"):
+        st.session_state["quiz_history"] = []
+        st.rerun()
     
     with st.expander("What is Hair porosity"):
          st.write("""
@@ -136,6 +136,8 @@ if st.button("Find my perfect product", type="primary"):
     
     
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
-st.subheader("how your hair was scored:")
-st.bar_chart(scores)
+if st.session_state["current_scores"] is not None:
+    st.markdown("### How your hair was scored:")
+    chart_data = pd.Series(st.session_state["current_scores"])
+    st.bar_chart(chart_data)
 st.write("Thank you for doing this test!")
