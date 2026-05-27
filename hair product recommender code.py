@@ -70,7 +70,7 @@ st.markdown("---")
 
 
 if st.button("Find my perfect product", type="primary"):
-final_product, final_brand =  final_recommendation = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
+    final_product, final_brand =  final_recommendation = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
     
     # Fun effect!
     st.balloons()
