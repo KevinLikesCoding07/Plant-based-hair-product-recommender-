@@ -1,4 +1,5 @@
 ﻿import streamlit as st
+import pandas as pd
 
 col1, col2 = st.columns([2, 1])
 
@@ -8,7 +9,8 @@ with col1:
 
 with col2:
     st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
-
+if "quiz_history" not in st.session_state:
+    st.session_state["quiz history"] = []
 with st.container(border=True):
     user_hair = st.selectbox(
         "Enter your hair type:",
@@ -83,9 +85,57 @@ if st.button("Find my perfect product", type="primary"):
     st.balloons()
     
     st.subheader("Your Custom Match:")
-    st.success(f"Based on your hair profile, the best product for you is: **{final_product}**")
-    st.info(f"🏅 **Recommended Brand:** We highly recommend checking out **{final_brand}** for this product!")
+    search_query = f"{final_brand} {final_product}".replace(" ", "+"
+    google_url = f"https://www.google.com/search?q={search_query}"
 
+    st.markdown(
+       f"""
+    <a href="{google_url}" target="_blank" style="text-decoration: none;">
+            <div style="background-color: #add8e6; color: yellow; padding: 15px 20px; text-align: center; border-radius: 5px; font-weight: bold; margin-top: 10px;">
+                 Find {final_brand} {final_product} on Google
+            </div>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
+    st.write("Rate your recommended product")
+    rating = st.slider("How accurate does this recommended product feel for your hair?", 1, 2, 3, 4, 5)
+    feedback_notes = st.text_input("Any specific ingredients, brands you wish we included or did you wish the product had different results?")
+    if st.button("Submit Feedback"):
+        st.success(f"Thank you for your {rating}-star review! Your suggestion for '{feedback_notes}' has been sent.")
+    st.markdown("---")
+    st.subheader("Don't understand any off these terms?, check out this educational resource")
+    if st.session_state["quiz_history"]:
+    st.markdown("---")
+    st.subheader(" Session Comparison Matrix")
+    st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
+    df = pd.DataFrame(st.session_state["quiz_history"])
+    st.dataframe(df, use_container_width=True)
+    if st.button(" Clear Quiz History", type="secondary"):
+        st.session_state["quiz_history"] = []
+        st.rerun()
+    
+    with st.expander("What is Hair porosity")
+         st.write("""
+         **Hair porosity refers to your hair's ability to absorb or retain moisture:
+         * **High porosity:**The hair cuticles are open. This means the hair can absorb moisture quickly, but also lose it as quickly; it can't retain moisture. This requires heavy sealant products.
+         * **Medium porosity:**This is the sweet spot for porosity because the cuticles are not too tight or open, and it absorbs and retains moisture pretty well.
+         * **Low porosity:**The hair cuticles are tightly packed. This means it absorbs moisture, and it also retains it, and it doesn't allow it to leave. This is the healthiest porosity type.
+         """)
+    with  st.expander("What are the scalp types")
+          st.write("""
+          **Your scalp condition changes how products interact with your hair follicles:
+          * **Dry scalp:**This lacks natural sebum production, which can cause flakes and itchiness. The flakes can easily be mistaken for dandruff, but these flakes are white, and they are like snow; dandruff is yellow.
+          * **Oily scalp:**This is when there's an overproduction of sebum, which can weigh your hair down and cause greasiness.
+          * **Balanced scalp:**This is when there's the perfect amount of natural sebum production, and this is a healthy scalp.
+          * **Combination scalp:**This means there's different sebum activity in different areas. Some areas may be dry and some may be oily.
+          """)
+         
+    
+    
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
-
+st.subheader("how your hair was scored:")
+st.bar_chart(scores)
 st.write("Thank you for doing this test!")
