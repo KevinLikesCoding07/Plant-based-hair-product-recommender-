@@ -112,7 +112,7 @@ if st.button("Find my perfect product", type="primary"):
         st.subheader(" Session Comparison Matrix")
         st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
         df = pd.DataFrame(st.session_state["quiz_history"])
-    st.dataframe(df, use_container_width=True)
+        st.dataframe(df, use_container_width=True)
     if st.button("Clear Quiz History", type="secondary"):
         st.session_state["quiz_history"] = []
         st.rerun()
@@ -140,4 +140,4 @@ if st.session_state.get("current_scores") is not None:
     st.markdown("### How your hair was scored:")
     chart_data = pd.Series(st.session_state["current_scores"])
     st.bar_chart(chart_data)
-st.write("Thank you for doing this test!")
+    st.write("Thank you for doing this test!")
