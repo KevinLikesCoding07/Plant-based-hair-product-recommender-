@@ -1,4 +1,5 @@
 ﻿import streamlit as st
+
 col1, col2 = st.columns([2, 1])
 
 with col1:
@@ -6,10 +7,7 @@ with col1:
     st.write("Find the right product for you")
 
 with col2:
-
     st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
-
-
 
 with st.container(border=True):
     user_hair = st.selectbox(
@@ -31,6 +29,17 @@ with st.container(border=True):
         "Enter Hair porosity:",
         ["Low", "Medium", "High"]
     )
+
+PRODUCT_BRANDS = {
+    "Murumuru Butter": "Bumble and bumble",
+    "Ouai Wave spray": "OUAI",
+    "Tea Tree oil": "The Body Shop",
+    "Coconut Oil": "SheaMoisture",
+    "Shea Butter": "Cantue",
+    "Aloe Vera": "Seven Minerals",
+    "Surface Awaken Shampoo & Conditioner": "Surface Hair Care",
+    "Argan Oil": "Moroccanoil"
+}
 
 def get_recommendation(hair, scalp, thickness, porosity):
     scores = {
@@ -61,24 +70,22 @@ def get_recommendation(hair, scalp, thickness, porosity):
     if hair == "Straight":
         scores["Argan Oil"] += 7
        
-    best_match = max(scores, key=scores.get)
-    return best_match
+    best_product = max(scores, key=scores.get)
     best_brand = PRODUCT_BRANDS.get(best_product, "Generic Brand")
     
     return best_product, best_brand
-st.markdown("---")
 
+st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
     final_product, final_brand = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
     
-    # Fun effect!
     st.balloons()
     
     st.subheader("Your Custom Match:")
-    st.success(f"Based on your hair profile, the best product for you is: **{final_recommendation}**")
+    st.success(f"Based on your hair profile, the best product for you is: **{final_product}**")
+    st.info(f"🏅 **Recommended Brand:** We highly recommend checking out **{final_brand}** for this product!")
 
-
-st.info(" **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
+st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 
 st.write("Thank you for doing this test!")
