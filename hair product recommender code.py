@@ -31,14 +31,14 @@ with st.container(border=True):
     )
 
 PRODUCT_BRANDS = {
-    "Murumuru Butter": "Bumble and bumble",
+    "Murumuru Butter": "Dr Adorable Inc",
     "Ouai Wave spray": "OUAI",
-    "Tea Tree oil": "The Body Shop",
-    "Coconut Oil": "SheaMoisture",
+    "Tea Tree oil": "Nexon Botanics",
+    "Coconut Oil": " Viva Naturals Organic Extra Virgin",
     "Shea Butter": "Cantue",
-    "Aloe Vera": "Seven Minerals",
+    "Aloe Vera": "Parachute",
     "Surface Awaken Shampoo & Conditioner": "Surface Hair Care",
-    "Argan Oil": "Moroccanoil"
+    "Argan Oil": "Cliganic "
 }
 
 def get_recommendation(hair, scalp, thickness, porosity):
