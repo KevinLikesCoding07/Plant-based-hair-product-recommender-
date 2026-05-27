@@ -85,7 +85,7 @@ if st.button("Find my perfect product", type="primary"):
     st.balloons()
     
     st.subheader("Your Custom Match:")
-    search_query = f"{final_brand} {final_product}".replace(" ", "+"
+    search_query = f"{final_brand} {final_product}".replace(" ", "+")
     google_url = f"https://www.google.com/search?q={search_query}"
 
     st.markdown(
