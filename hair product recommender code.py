@@ -1,27 +1,36 @@
 ﻿import streamlit as st
+col1, col2 = st.columns([2, 1])
 
-st.title("🌱 Plant-Based Hair Product Recommender")
+with col1:
+    st.title("🌱 Plant-Based Hair Product Recommender")
+    st.write("Find the right product for you")
 
-# 1. Gather inputs using Streamlit selectboxes
-user_hair = st.selectbox(
-    "Enter your hair type:",
-    ["Straight", "Wavy", "Curly", "Coily"]
-)
+with col2:
 
-user_scalp = st.selectbox(
-    "Enter scalp type:",
-    ["Oily", "Balanced", "Dry", "Combination"]
-)
+    st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
 
-user_thickness = st.selectbox(
-    "Enter Hair Thickness:",
-    ["Thin", "Fine", "Medium", "Thick"]
-)
 
-user_porosity = st.selectbox(
-    "Enter Hair porosity:",
-    ["Low", "Medium", "High"]
-)
+
+with st.container(border=True):
+    user_hair = st.selectbox(
+        "Enter your hair type:",
+        ["Straight", "Wavy", "Curly", "Coily"]
+    )
+
+    user_scalp = st.selectbox(
+        "Enter scalp type:",
+        ["Oily", "Balanced", "Dry", "Combination"]
+    )
+
+    user_thickness = st.selectbox(
+        "Enter Hair Thickness:",
+        ["Thin", "Fine", "Medium", "Thick"]
+    )
+
+    user_porosity = st.selectbox(
+        "Enter Hair porosity:",
+        ["Low", "Medium", "High"]
+    )
 
 def get_recommendation(hair, scalp, thickness, porosity):
     scores = {
@@ -35,7 +44,6 @@ def get_recommendation(hair, scalp, thickness, porosity):
         "Argan Oil": 0
     }
     
-    # Matches strings exactly as they appear in the dropdowns
     if hair in ["Curly", "Coily"]:
         scores["Murumuru Butter"] += 3
     if hair == "Wavy":
@@ -58,13 +66,17 @@ def get_recommendation(hair, scalp, thickness, porosity):
 
 st.markdown("---")
 
-final_recommendation = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
 
-st.subheader("Your Custom Match:")
-st.success(f"Based on your hair profile, the best product for you is: **{final_recommendation}**")
+if st.button("Find my perfect product", type="primary"):
+    final_recommendation = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
+    
+    # Fun effect!
+    st.balloons()
+    
+    st.subheader("Your Custom Match:")
+    st.success(f"Based on your hair profile, the best product for you is: **{final_recommendation}**")
 
-# 4. Disclaimers and Outros
+
 st.info(" **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 
 st.write("Thank you for doing this test!")
-
