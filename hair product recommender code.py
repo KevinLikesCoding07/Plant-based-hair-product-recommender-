@@ -63,7 +63,9 @@ def get_recommendation(hair, scalp, thickness, porosity):
        
     best_match = max(scores, key=scores.get)
     return best_match
-
+    best_brand = PRODUCT_BRANDS.get(best_product, "Generic Brand")
+    
+    return best_product, best_brand
 st.markdown("---")
 
 
