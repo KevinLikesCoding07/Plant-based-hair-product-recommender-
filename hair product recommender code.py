@@ -114,8 +114,8 @@ if st.button("Find my perfect product", type="primary"):
         df = pd.DataFrame(st.session_state["quiz_history"])
         st.dataframe(df, use_container_width=True)
         if st.button(" Clear Quiz History", type="secondary"):
-        st.session_state["quiz_history"] = []
-        st.rerun()
+            st.session_state["quiz_history"] = []
+            st.rerun()
     
     with st.expander("What is Hair porosity")
          st.write("""
