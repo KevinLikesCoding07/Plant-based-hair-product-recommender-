@@ -108,12 +108,12 @@ if st.button("Find my perfect product", type="primary"):
     st.markdown("---")
     st.subheader("Don't understand any off these terms?, check out this educational resource")
     if st.session_state["quiz_history"]:
-    st.markdown("---")
-    st.subheader(" Session Comparison Matrix")
-    st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
-    df = pd.DataFrame(st.session_state["quiz_history"])
-    st.dataframe(df, use_container_width=True)
-    if st.button(" Clear Quiz History", type="secondary"):
+        st.markdown("---")
+        st.subheader(" Session Comparison Matrix")
+        st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
+        df = pd.DataFrame(st.session_state["quiz_history"])
+        st.dataframe(df, use_container_width=True)
+        if st.button(" Clear Quiz History", type="secondary"):
         st.session_state["quiz_history"] = []
         st.rerun()
     
