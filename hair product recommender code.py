@@ -45,21 +45,21 @@ def get_recommendation(hair, scalp, thickness, porosity):
     }
     
     if hair in ["Curly", "Coily"]:
-        scores["Murumuru Butter"] += 3
+        scores["Murumuru Butter"] += 1
     if hair == "Wavy":
         scores["Ouai Wave spray"] += 3
     if scalp == "Oily":
         scores["Tea Tree oil"] += 5
     if scalp == "Dry":
-        scores["Coconut Oil"] += 5
+        scores["Coconut Oil"] += 4
     if porosity == "High":
-        scores["Shea Butter"] += 5
+        scores["Shea Butter"] += 2
     if porosity == "Low":
-        scores["Aloe Vera"] += 5
+        scores["Aloe Vera"] += 6
     if thickness == "Thin":
-        scores["Surface Awaken Shampoo & Conditioner"] += 5
+        scores["Surface Awaken Shampoo & Conditioner"] += 4
     if hair == "Straight":
-        scores["Argan Oil"] += 5
+        scores["Argan Oil"] += 7
        
     best_match = max(scores, key=scores.get)
     return best_match
