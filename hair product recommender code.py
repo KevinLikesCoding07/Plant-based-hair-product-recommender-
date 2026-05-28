@@ -104,7 +104,13 @@ else:
         "Porosity": user_porosity,
         "Recommended Product": f"{final_brand} {final_product}"
     })
-    st.balloons()
+
+    max_possible_score = 7
+    user_score = scores[final_product]
+    match_percentage
+    = min(int((user_score / max_possible_score) * 100), 100)
+    
+    st.fireworks()
     
     st.subheader("Your Custom Match:")
     search_query = f"{final_brand} {final_product}".replace(" ", "+")
