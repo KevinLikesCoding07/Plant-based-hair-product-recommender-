@@ -136,8 +136,12 @@ if st.button("Find my perfect product", type="primary"):
     
     
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
-if st.session_state.get("current_scores") is not None:
-    st.markdown("### How your hair was scored:")
+if "current_scores" not in st.session_state:
+    st.session_state["current_scores"] = None
+    st.session_state["current_scores"] = scores
+    st.markdown("How your hair was scored:")
     chart_data = pd.Series(st.session_state["current_scores"])
-    st.bar_chart(chart_data)
+        list(st.session_state['current scores'].items()(,
+        columns=["product", "score"]
+    st.bar_chart(data=chart_df, x="Product", y="Score")
     st.write("Thank you for doing this test!")
