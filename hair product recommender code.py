@@ -12,7 +12,7 @@ with col2:
 if "quiz_history" not in st.session_state:
     st.session_state["quiz_history"] = []
 with st.container(border=True):
-    user_hair = st.segmented_control(
+    user_hair = st.pills(
         "Enter your hair type:",
         ["Straight", "Wavy", "Curly", "Coily"]
     )
