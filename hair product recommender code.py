@@ -109,7 +109,7 @@ if st.button("reset quiz", type="secondary"):
    st.session_state["current_scores"] = None
    st.rerun()
 
-    st.markdown("---")
+st.markdown("---")
     st.write("Rate your recommended product")
     rating = st.slider("How accurate does this recommended product feel for your hair?", 1, 5, 4)
     feedback_notes = st.text_input("Any specific ingredients, brands you wish we included or did you wish the product had different results?")
