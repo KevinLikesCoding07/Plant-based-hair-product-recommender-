@@ -92,8 +92,8 @@ def get_recommendation(hair, scalp, thickness, porosity):
 st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
-if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
-    st.error("⚠️ **Missing Information:** Please select an option for all 4 questions before finding your product!")
+    if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
+        st.error("⚠️ **Missing Information:** Please select an option for all 4 questions before finding your product!")
 else:
     final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
     st.session_state["current_scores"] = scores
