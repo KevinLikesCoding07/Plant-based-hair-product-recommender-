@@ -12,22 +12,22 @@ with col2:
 if "quiz_history" not in st.session_state:
     st.session_state["quiz_history"] = []
 with st.container(border=True):
-    user_hair = st.selectbox(
+    user_hair = st.segmented_control(
         "Enter your hair type:",
         ["Straight", "Wavy", "Curly", "Coily"]
     )
 
-    user_scalp = st.selectbox(
+    user_scalp = st.pills(
         "Enter scalp type:",
         ["Oily", "Balanced", "Dry", "Combination"]
     )
 
-    user_thickness = st.selectbox(
+    user_thickness = st.pills(
         "Enter Hair Thickness:",
         ["Thin", "Fine", "Medium", "Thick"]
     )
 
-    user_porosity = st.selectbox(
+    user_porosity = st.pills(
         "Enter Hair porosity:",
         ["Low", "Medium", "High"]
     )
