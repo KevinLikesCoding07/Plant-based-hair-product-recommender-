@@ -147,7 +147,7 @@ if "current_scores" not in st.session_state:
     st.session_state["current_scores"] = None
     st.markdown("How your hair was scored:")
     chart_data = pd.Series(st.session_state["current_scores"])
-    list(st.session_state['current scores'].items()),
+    list(st.session_state['current_scores'].items()),
     columns=["product", "score"]
     st.bar_chart(data=chart_df, x="Product", y="Score")
     st.write("Thank you for doing this test!")
