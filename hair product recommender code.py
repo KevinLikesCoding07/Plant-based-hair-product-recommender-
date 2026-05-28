@@ -1,38 +1,6 @@
 ﻿import streamlit as st
 import pandas as pd
-st.markdown(
-    """
-    <style>
-    /* 1. Target the main application background */
-    .stApp {
-        background-color: #FFFDD0 !important;
-    }
-    
-    /* 2. Target text tags and assign the font family and color */
-    h1, h2, h3, p, span, label, div {
-        font-family: 'Helvetica Neue', Arial, sans-serif !important;
-        color: #2E4031 !important;
-    }
-    
-    /* 3. Target the interactive main container card */
-    [data-testid="stVerticalBlockBorderContainer"] {
-        background-color: #ffffff !important;
-        border: 1px solid #e1e4dc !important;
-        border-radius: 16px !important;
-        box-shadow: 0 4px 12px rgba(46, 64, 49, 0.05) !important;
-        padding: 25px !important;
-    }
-    
-    /* 4. Target the informational alert elements */
-    .stAlert {
-        background-color: #f0f4f1 !important;
-        border: 1px solid #cbdad0 !important;
-        border-radius: 12px !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
 col1, col2 = st.columns([2, 1])
 
 with col1:
