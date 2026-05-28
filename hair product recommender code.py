@@ -81,7 +81,14 @@ st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
     final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
-    
+    st.session_state["current_scores"] = scores
+    st.session_state["quiz_history"].append({
+        "Hair Type": user_hair,
+        "Scalp Type": user_scalp,
+        "Thickness": user_thickness,
+        "Porosity": user_porosity,
+        "Recommended Product": f"{final_brand} {final_product}"
+    })
     st.balloons()
     
     st.subheader("Your Custom Match:")
@@ -138,7 +145,6 @@ if st.button("Find my perfect product", type="primary"):
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 if "current_scores" not in st.session_state:
     st.session_state["current_scores"] = None
-    st.session_state["current_scores"] = scores
     st.markdown("How your hair was scored:")
     chart_data = pd.Series(st.session_state["current_scores"])
     list(st.session_state['current scores'].items()),
