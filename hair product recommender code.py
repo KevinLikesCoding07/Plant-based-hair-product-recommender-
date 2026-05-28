@@ -43,7 +43,7 @@ PRODUCT_BRANDS = {
     "Argan Oil": "Cliganic "
 }
 
-PRODUCT_EXPLAINER = {
+PRODUCT_EXPLAINERS = {
     "Murumuru Butter": "Murumuru Butter is excellent for curly and coily hair. It also locks in moisture, making it useful for curly and coily hair because they tend to dry easily.",
     "Ouai Wave spray": "Ouai wave spray is really good for wavy hair because it uses plant proteins to give your wavy hair more texture, volume, and definition.",
     "Tea Tree oil": "Tea tree oil is like a clarifying agent, which balances sebum and helps with an oily scalp.",
