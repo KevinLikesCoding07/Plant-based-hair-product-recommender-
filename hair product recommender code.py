@@ -88,8 +88,7 @@ def get_recommendation(hair, scalp, thickness, porosity):
     best_brand = PRODUCT_BRANDS.get(best_product, "Generic Brand")
     
     return best_product, best_brand, scores
-if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
-    st.warning("⚠️ Missing information. Please select an option for ALL 4 questions")
+
 st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
@@ -109,6 +108,8 @@ if st.button("Find my perfect product", type="primary"):
     google_url = f"https://www.google.com/search?q={search_query}"
     match_explainer = PRODUCT_EXPLAINERS.get(final_product, "This product is a perfect match for your  hair details!")
     st.info(f"💡 **Why this works:** {match_explainer}")
+if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
+    st.error("⚠️ **Missing Information:** Please select an option for all 4 questions before finding your product!")
     st.markdown(
        f"""
     <a href="{google_url}" target="_blank" style="text-decoration: none;">
