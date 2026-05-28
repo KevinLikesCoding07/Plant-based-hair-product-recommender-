@@ -105,6 +105,9 @@ if st.button("Find my perfect product", type="primary"):
         """,
         unsafe_allow_html=True
     )
+if st.button("reset quiz", type="secondary"):
+   st.session_state["current_scores"] = None
+   st.rerun()
 
     st.markdown("---")
     st.write("Rate your recommended product")
@@ -151,6 +154,6 @@ if st.session_state.get("current_scores") is not None:
         columns=["Product", "Score"]
     )
     
-    st.bar_chart(data=chart_df, x="Product", y="Score")
+    st.bar_chart(data=chart_df, x="Product", y="Score", color="#FFD700")
     st.write("Thank you for doing this test!")
     st.write("Thank you for doing this test!")
