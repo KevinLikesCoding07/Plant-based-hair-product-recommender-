@@ -43,6 +43,18 @@ PRODUCT_BRANDS = {
     "Argan Oil": "Cliganic "
 }
 
+PRODUCT_EXPLAINER = {
+    "Murumuru Butter": "Murumuru Butter is excellent for curly and coily hair. It also locks in moisture, making it useful for curly and coily hair because they tend to dry easily.",
+    "Ouai Wave spray": "Ouai wave spray is really good for wavy hair because it uses plant proteins to give your wavy hair more texture, volume, and definition.",
+    "Tea Tree oil": "Tea tree oil is like a clarifying agent, which balances sebum and helps with an oily scalp.",
+    "Coconut Oil": "Coconut oil penetrates your scalp and locks in moisture,  which is perfect for a dry scalp.",
+    "Shea Butter": "Shea butter is good for high porosity hair because it acts like a protective barrier with an open  cuticle, which locks in moisture.",
+    "Aloe Vera": "Aloe vera is a lightweight, hydration product that hydrates your hair without making it greasy.",
+    "Surface Awaken Shampoo & Conditioner": "Surface Awaken Shampoo & Conditioner uses natural, botanical ingredients that stimulate your scalp and this product doesn't have any chemicals that will damage your hair",
+    "Argan Oil": "Argan oil is a lightweight, frizz control product that moisturizes your hair and scalp, and it is amazing for straight hair and straight hair patterns that can get frizzy", 
+}   
+    
+
 def get_recommendation(hair, scalp, thickness, porosity):
     scores = {
         "Murumuru Butter": 0, 
@@ -94,7 +106,8 @@ if st.button("Find my perfect product", type="primary"):
     st.subheader("Your Custom Match:")
     search_query = f"{final_brand} {final_product}".replace(" ", "+")
     google_url = f"https://www.google.com/search?q={search_query}"
-
+    match_explainer = PRODUCT_EXPLAINERS.get(final_product, "This product is a perfect match for your  hair details!")
+    st.info(f"💡 **Why this works:** {match_explainer}")
     st.markdown(
        f"""
     <a href="{google_url}" target="_blank" style="text-decoration: none;">
