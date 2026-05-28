@@ -92,6 +92,9 @@ def get_recommendation(hair, scalp, thickness, porosity):
 st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
+if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
+    st.error("⚠️ **Missing Information:** Please select an option for all 4 questions before finding your product!")
+else:
     final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
     st.session_state["current_scores"] = scores
     st.session_state["quiz_history"].append({
@@ -108,8 +111,7 @@ if st.button("Find my perfect product", type="primary"):
     google_url = f"https://www.google.com/search?q={search_query}"
     match_explainer = PRODUCT_EXPLAINERS.get(final_product, "This product is a perfect match for your  hair details!")
     st.info(f"💡 **Why this works:** {match_explainer}")
-if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
-    st.error("⚠️ **Missing Information:** Please select an option for all 4 questions before finding your product!")
+
     st.markdown(
        f"""
     <a href="{google_url}" target="_blank" style="text-decoration: none;">
