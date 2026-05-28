@@ -88,7 +88,7 @@ def get_recommendation(hair, scalp, thickness, porosity):
     best_brand = PRODUCT_BRANDS.get(best_product, "Generic Brand")
     
     return best_product, best_brand, scores
-if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None
+if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
     st.warning("⚠️ Missing information. Please select an option for ALL 4 questions")
 st.markdown("---")
 
