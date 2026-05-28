@@ -127,14 +127,14 @@ if st.button("Clear Quiz History", type="secondary"):
    st.session_state["quiz_history"] = []
    st.rerun()
     
-    with st.expander("What is Hair porosity"):
+with st.expander("What is Hair porosity"):
          st.write("""
          **Hair porosity refers to your hair's ability to absorb or retain moisture:
          * **High porosity:**The hair cuticles are open. This means the hair can absorb moisture quickly, but also lose it as quickly; it can't retain moisture. This requires heavy sealant products.
          * **Medium porosity:**This is the sweet spot for porosity because the cuticles are not too tight or open, and it absorbs and retains moisture pretty well.
          * **Low porosity:**The hair cuticles are tightly packed. This means it absorbs moisture, and it also retains it, and it doesn't allow it to leave. This is the healthiest porosity type.
          """)
-    with  st.expander("What are the scalp types"):
+with  st.expander("What are the scalp types"):
           st.write("""
           **Your scalp condition changes how products interact with your hair follicles:
           * **Dry scalp:**This lacks natural sebum production, which can cause flakes and itchiness. The flakes can easily be mistaken for dandruff, but these flakes are white, and they are like snow; dandruff is yellow.
