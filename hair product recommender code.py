@@ -110,22 +110,22 @@ if st.button("reset quiz", type="secondary"):
    st.rerun()
 
 st.markdown("---")
-    st.write("Rate your recommended product")
-    rating = st.slider("How accurate does this recommended product feel for your hair?", 1, 5, 4)
-    feedback_notes = st.text_input("Any specific ingredients, brands you wish we included or did you wish the product had different results?")
-    if st.button("Submit Feedback"):
-        st.success(f"Thank you for your {rating}-star review! Your suggestion for '{feedback_notes}' has been sent.")
-    st.markdown("---")
-    st.subheader("Don't understand any off these terms?, check out this educational resource")
-    if st.session_state["quiz_history"]:
-        st.markdown("---")
-        st.subheader(" Session Comparison Matrix")
-        st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
-        df = pd.DataFrame(st.session_state["quiz_history"])
-        st.dataframe(df, use_container_width=True)
-    if st.button("Clear Quiz History", type="secondary"):
-        st.session_state["quiz_history"] = []
-        st.rerun()
+st.write("Rate your recommended product")
+rating = st.slider("How accurate does this recommended product feel for your hair?", 1, 5, 4)
+feedback_notes = st.text_input("Any specific ingredients, brands you wish we included or did you wish the product had different results?")
+if st.button("Submit Feedback"):
+     st.success(f"Thank you for your {rating}-star review! Your suggestion for '{feedback_notes}' has been sent.")
+     st.markdown("---")
+     st.subheader("Don't understand any off these terms?, check out this educational resource")
+if st.session_state["quiz_history"]:
+   st.markdown("---")
+   st.subheader(" Session Comparison Matrix")
+   st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
+   df = pd.DataFrame(st.session_state["quiz_history"])
+   st.dataframe(df, use_container_width=True)
+if st.button("Clear Quiz History", type="secondary"):
+   st.session_state["quiz_history"] = []
+   st.rerun()
     
     with st.expander("What is Hair porosity"):
          st.write("""
