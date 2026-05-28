@@ -109,7 +109,7 @@ else:
     user_score = scores[final_product]
     match_percentage = min(int((user_score / max_possible_score) * 100), 100)
     
-    st.fireworks()
+    st.snow()
     
     st.subheader("Your Custom Match:")
     search_query = f"{final_brand} {final_product}".replace(" ", "+")
