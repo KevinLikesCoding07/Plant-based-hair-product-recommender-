@@ -107,8 +107,7 @@ else:
 
     max_possible_score = 7
     user_score = scores[final_product]
-    match_percentage
-    = min(int((user_score / max_possible_score) * 100), 100)
+    match_percentage = min(int((user_score / max_possible_score) * 100), 100)
     
     st.fireworks()
     
