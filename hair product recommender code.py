@@ -1,32 +1,34 @@
 ﻿import streamlit as st
 import pandas as pd
-<style>
-     {
-        background-color: #FFFDD0;
-    }
-    
-   {
-        font-family: 'sorgath', 'Helvetica Neue', sans-serif 
-        color: #2E4031 
-    }
-    
-  
-    [data-testid="stVerticalBlockBorderContainer"] {
-        background-color: #ffffff 
-        border: 1px solid #e1e4dc 
-        border-radius: 16px 
-        box-shadow: 0 4px 12px rgba(46, 64, 49, 0.05) 
-        padding: 25px 
-    }
-    
-   
-        background-color: #f0f4f1 
-        border: 1px solid #cbdad0 
-        border-radius: 12px 
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
+st.markdown(
+     """
+     <style>
+          {
+             background-color: #FFFDD0;
+         }
+         
+        {
+             font-family: 'sorgath', 'Helvetica Neue', sans-serif 
+             color: #2E4031 
+         }
+         
+       
+         [data-testid="stVerticalBlockBorderContainer"] {
+             background-color: #ffffff 
+             border: 1px solid #e1e4dc 
+             border-radius: 16px 
+             box-shadow: 0 4px 12px rgba(46, 64, 49, 0.05) 
+             padding: 25px 
+         }
+         
+        
+             background-color: #f0f4f1 
+             border: 1px solid #cbdad0 
+             border-radius: 12px 
+         }
+         </style>
+         """,
+         unsafe_allow_html=True
 )
 col1, col2 = st.columns([2, 1])
 
