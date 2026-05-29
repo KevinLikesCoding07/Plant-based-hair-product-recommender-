@@ -1,9 +1,6 @@
 ﻿import streamlit as st
 import pandas as pd
 import time  
-with st.spinner("Analyzing your hair details....."):
-    time.sleep(2.5)
-st.success("We found your perfect product")
 
 col1, col2 = st.columns([2, 1])
 
@@ -101,6 +98,10 @@ if st.button("Find my perfect product", type="primary"):
     if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
         st.error("⚠️ **Missing information:** Please select an option for ALL 4 questions before running the recommendation engine!")
     else:
+        with st.spinner("Analyzing your hair details....."):
+            time.sleep(2.5)
+        st.success("We found your perfect product")
+
         final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
         st.session_state["current_scores"] = scores
         st.session_state["quiz_history"].append({
