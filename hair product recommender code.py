@@ -1,5 +1,6 @@
 ﻿import streamlit as st
 import pandas as pd
+import time  
 with st.spinner("Analyzing your hair details....."):
     time.sleep(2.5)
 st.success("We found your perfect product")
