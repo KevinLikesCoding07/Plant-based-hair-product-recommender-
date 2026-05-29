@@ -201,28 +201,28 @@ with  st.expander("What are the scalp types"):
           """)
 st.subheader("Hair care routine for each type of hair")
 
-with st.expander("Straight hair routine")
+with st.expander("Straight hair routine"):
      st.write("""
      * Wash your hair 2-3 times a week.
      * Use a sulfate-free shampoo and use a conditioner to make sure hair doesn't fall flat and look frizzy.
      * Use a brush to detangle.
      * Use a natural hair oil once a week to maintain a healthy scalp.
      """)
-with st.expander("Wavy hair routine")
+with st.expander("Wavy hair routine"):
      st.write("""
      * Avoid using too much shampoo; only use it 2-3 times a week.
      * Avoid brushing your hair while it is dry, as this can damage hair and cause frizz. Only brush when wet.
      * Use a lightweight conditioner every time you use shampoo.
      * Use a lightweight hair oil once a week for scalp health.
      """)
-with st.expander("Curly hair routine")
+with st.expander("Curly hair routine"):
      st.write("""
      *Avoid brushing your hair dry; do it while it is wet.
      * Use richer products.
      * Use a sulfate-free shampoo and cleansing conditioner.
      * Sleep with a silk bonnet to avoid frizz.
      """)
-with st.expander("Coily hair routine")
+with st.expander("Coily hair routine"):
      st.write("""
      * Use sulfate-free shampoo and a rich conditioner once a week
      * Sleep with a bonnet to protect hair
