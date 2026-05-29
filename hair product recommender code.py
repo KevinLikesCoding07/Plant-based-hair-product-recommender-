@@ -1,5 +1,8 @@
 ﻿import streamlit as st
 import pandas as pd
+with st.spinner("Analyzing your hair details....."):
+    time.sleep(2.5)
+st.success("We found your perfect product")
 
 col1, col2 = st.columns([2, 1])
 
@@ -93,7 +96,7 @@ def get_recommendation(hair, scalp, thickness, porosity):
 st.markdown("---")
 
 if st.button("Find my perfect product", type="primary"):
-    # 🔒 Form Validation Check
+    
     if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
         st.error("⚠️ **Missing information:** Please select an option for ALL 4 questions before running the recommendation engine!")
     else:
@@ -108,14 +111,13 @@ if st.button("Find my perfect product", type="primary"):
         })
         st.balloons()
         
-        # 📊 Dynamic Match Percentage Logic
         max_possible_score = 7
         user_score = scores[final_product]
         match_percentage = min(int((user_score / max_possible_score) * 100), 100)
         
         st.subheader("Your Custom Match:")
         
-        # 🌟 Layout Match Percentages beautifully using st.metric cards
+       
         col_metric1, col_metric2 = st.columns(2)
         with col_metric1:
             st.metric(label="Match Compatibility", value=f"{match_percentage}%")
@@ -127,7 +129,6 @@ if st.button("Find my perfect product", type="primary"):
         match_explainer = PRODUCT_EXPLAINERS.get(final_product, "This product is a perfect match for your hair details!")
         st.info(f"💡 **Why this works:** {match_explainer}")
         
-        # 🌐 Safe HTML Button Link Execution
         google_button_html = f'<a href="{google_url}" target="_blank" style="text-decoration: none;"><div style="background-color: #add8e6; color: black; padding: 15px 20px; text-align: center; border-radius: 5px; font-weight: bold; margin-top: 10px;">Find {final_brand} {final_product} on Google</div></a>'
         st.markdown(google_button_html, unsafe_allow_html=True)
         
@@ -169,8 +170,7 @@ feedback_notes = st.text_input("Any specific ingredients, brands you wish we inc
 if st.button("Submit Feedback"):
      st.success(f"Thank you for your {rating}-star review! Your suggestion for '{feedback_notes}' has been sent.")
      st.markdown("---")
-     st.subheader("Don't understand any off these terms?, check out this educational resource")
-
+     
 if st.session_state["quiz_history"]:
    st.markdown("---")
    st.subheader(" Session Comparison Matrix")
@@ -181,7 +181,9 @@ if st.session_state["quiz_history"]:
 if st.button("Clear Quiz History", type="secondary"):
    st.session_state["quiz_history"] = []
    st.rerun()
-    
+
+st.subheader("Don't understand any off these terms?, check out this educational resource")
+
 with st.expander("What is Hair porosity"):
          st.write("""
          **Hair porosity refers to your hair's ability to absorb or retain moisture:
@@ -197,7 +199,35 @@ with  st.expander("What are the scalp types"):
           * **Balanced scalp:**This is when there's the perfect amount of natural sebum production, and this is a healthy scalp.
           * **Combination scalp:**This means there's different sebum activity in different areas. Some areas may be dry and some may be oily.
           """)
-         
+st.subheader("Hair care routine for each type of hair")
+
+with st.expander("Straight hair routine")
+     st.write("""
+     * Wash your hair 2-3 times a week.
+     * Use a sulfate-free shampoo and use a conditioner to make sure hair doesn't fall flat and look frizzy.
+     * Use a brush to detangle.
+     * Use a natural hair oil once a week to maintain a healthy scalp.
+     """)
+with st.expander("Wavy hair routine")
+     st.write("""
+     * Avoid using too much shampoo; only use it 2-3 times a week.
+     * Avoid brushing your hair while it is dry, as this can damage hair and cause frizz. Only brush when wet.
+     * Use a lightweight conditioner every time you use shampoo.
+     * Use a lightweight hair oil once a week for scalp health.
+     """)
+with st.expander("Curly hair routine")
+     st.write("""
+     *Avoid brushing your hair dry; do it while it is wet.
+     * Use richer products.
+     * Use a sulfate-free shampoo and cleansing conditioner.
+     * Sleep with a silk bonnet to avoid frizz.
+     """)
+with st.expander("Coily hair routine")
+     st.write("""
+     * Use sulfate-free shampoo and a rich conditioner once a week
+     * Sleep with a bonnet to protect hair
+     *Use light oils for a healthy scalp
+     """)
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 
 if st.session_state.get("current_scores") is not None:
