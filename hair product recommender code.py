@@ -1,7 +1,7 @@
 ﻿import streamlit as st
 import pandas as pd
 import time  
-
+col1, col2 = st.columns([2, 1])
 with col1:
     st.title("🌱 Plant-Based Hair Product Recommender")
     st.write("Find the right product for you")
