@@ -182,7 +182,7 @@ if st.button("Clear Quiz History", type="secondary"):
    st.session_state["quiz_history"] = []
    st.rerun()
 
-st.subheader("Don't understand any off these terms?, check out this educational resource")
+st.subheader("Don't understand any of these terms?, check out this educational resource")
 
 with st.expander("What is Hair porosity"):
          st.write("""
