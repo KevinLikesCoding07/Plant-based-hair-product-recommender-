@@ -1,7 +1,12 @@
 ﻿import streamlit as st
 import pandas as pd
 import time  
-
+[theme]
+primaryColor = "#D97706"
+backgroundColor = "#FFFDFA"
+secondaryBackgroundColor = "#FEF3C7"
+textColor = "#1F2937"
+font = "sans serif"
 col1, col2 = st.columns([2, 1])
 
 with col1:
