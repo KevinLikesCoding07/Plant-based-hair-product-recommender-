@@ -228,7 +228,7 @@ with st.expander("Coily hair routine"):
      st.write("""
      * Use sulfate-free shampoo and a rich conditioner once a week
      * Sleep with a bonnet to protect hair
-     *Use light oils for a healthy scalp
+     * Use light oils for a healthy scalp
      """)
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 
