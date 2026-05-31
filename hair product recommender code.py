@@ -2,7 +2,7 @@
 import pandas as pd
 import time  
 
-# Initialize quiz history immediately at app launch
+
 if "quiz_history" not in st.session_state:
     st.session_state["quiz_history"] = []
 
@@ -260,7 +260,7 @@ pages = {
         st.Page(show_routine, title="Hair routines"),
     ],
     "How your hair was scored Graph": [
-        st.page(hair_graph, title = "How your hair was scored"),
+        st.Page(hair_graph, title = "How your hair was scored"),
     ],
 }
 
