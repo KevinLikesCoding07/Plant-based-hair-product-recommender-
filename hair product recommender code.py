@@ -237,7 +237,7 @@ def show_routine():
 
 
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
-
+def hair_graph():
 if st.session_state.get("current_scores") is not None:
     st.markdown("### How your hair was scored:")
     chart_df = pd.DataFrame(
@@ -258,6 +258,9 @@ pages = {
     "Information": [
         st.Page(show_glossary, title="Hair terms"),
         st.Page(show_routine, title="Hair routines"),
+    ],
+    "How your hair was scored Graph": [
+        st.page(hair_graph, title = "How your hair was scored"),
     ],
 }
 
