@@ -111,7 +111,7 @@ if st.button("Find my perfect product", type="primary"):
         })
         st.balloons()
         
-        max_possible_score = 7https://github.com/KevinLikesCoding07/Plant-based-hair-product-recommender-/security
+        max_possible_score = 7
         user_score = scores[final_product]
         match_percentage = min(int((user_score / max_possible_score) * 100), 100)
         
