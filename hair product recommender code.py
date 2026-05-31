@@ -111,7 +111,7 @@ if st.button("Find my perfect product", type="primary"):
         })
         st.balloons()
         
-        max_possible_score = 7
+        max_possible_score = 7https://github.com/KevinLikesCoding07/Plant-based-hair-product-recommender-/security
         user_score = scores[final_product]
         match_percentage = min(int((user_score / max_possible_score) * 100), 100)
         
@@ -120,7 +120,7 @@ if st.button("Find my perfect product", type="primary"):
        
         col_metric1, col_metric2 = st.columns(2)
         with col_metric1:
-            st.metric(label="Match Compatibility", value=f"{match_percentage}%")
+            st.metric(label="Match Compatibility", value=f"{match_percentage}%", delta="This is the product you matched the most with")
         with col_metric2:
             st.metric(label="Recommended Brand", value=final_brand)
             
