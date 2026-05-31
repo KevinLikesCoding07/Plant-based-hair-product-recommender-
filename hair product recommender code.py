@@ -183,16 +183,16 @@ if st.button("Clear Quiz History", type="secondary"):
    st.session_state["quiz_history"] = []
    st.rerun()
 def show_glossary():
-st.subheader("Don't understand any of these terms?, check out this educational resource")
-
-with st.expander("What is Hair porosity"):
+    st.subheader("Don't understand any of these terms?, check out this educational resource")
+    
+    with st.expander("What is Hair porosity"):
          st.write("""
          **Hair porosity refers to your hair's ability to absorb or retain moisture:
          * **High porosity:**The hair cuticles are open. This means the hair can absorb moisture quickly, but also lose it as quickly; it can't retain moisture. This requires heavy sealant products.
          * **Medium porosity:**This is the sweet spot for porosity because the cuticles are not too tight or open, and it absorbs and retains moisture pretty well.
          * **Low porosity:**The hair cuticles are tightly packed. This means it absorbs moisture, and it also retains it, and it doesn't allow it to leave. This is the healthiest porosity type.
          """)
-with  st.expander("What are the scalp types"):
+    with  st.expander("What are the scalp types"):
           st.write("""
           **Your scalp condition changes how products interact with your hair follicles:
           * **Dry scalp:**This lacks natural sebum production, which can cause flakes and itchiness. The flakes can easily be mistaken for dandruff, but these flakes are white, and they are like snow; dandruff is yellow.
@@ -201,30 +201,30 @@ with  st.expander("What are the scalp types"):
           * **Combination scalp:**This means there's different sebum activity in different areas. Some areas may be dry and some may be oily.
           """)
 def show_routine():
-st.subheader("Hair care routine for each type of hair")
-
-with st.expander("Straight hair routine"):
+    st.subheader("Hair care routine for each type of hair")
+    
+    with st.expander("Straight hair routine"):
      st.write("""
      * Wash your hair 2-3 times a week.
      * Use a sulfate-free shampoo and use a conditioner to make sure hair doesn't fall flat and look frizzy.
      * Use a brush to detangle.
      * Use a natural hair oil once a week to maintain a healthy scalp.
      """)
-with st.expander("Wavy hair routine"):
+    with st.expander("Wavy hair routine"):
      st.write("""
      * Avoid using too much shampoo; only use it 2-3 times a week.
      * Avoid brushing your hair while it is dry, as this can damage hair and cause frizz. Only brush when wet.
      * Use a lightweight conditioner every time you use shampoo.
      * Use a lightweight hair oil once a week for scalp health.
      """)
-with st.expander("Curly hair routine"):
+    with st.expander("Curly hair routine"):
      st.write("""
      *Avoid brushing your hair dry; do it while it is wet.
      * Use richer products.
      * Use a sulfate-free shampoo and cleansing conditioner.
      * Sleep with a silk bonnet to avoid frizz.
      """)
-with st.expander("Coily hair routine"):
+    with st.expander("Coily hair routine"):
      st.write("""
      * Use sulfate-free shampoo and a rich conditioner once a week
      * Sleep with a bonnet to protect hair
