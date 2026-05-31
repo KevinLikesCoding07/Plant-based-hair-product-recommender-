@@ -6,6 +6,9 @@ import time
 if "quiz_history" not in st.session_state:
     st.session_state["quiz_history"] = []
 
+if "current_scores" not in st.session_state:
+    st.session_state["current_scores"] = None
+
 PRODUCT_BRANDS = {
     "Murumuru Butter": "Dr Adorable Inc",
     "Ouai Wave spray": "OUAI",
@@ -245,6 +248,7 @@ def hair_graph():
             columns=["Product", "Score"]
         )
         st.bar_chart(data=chart_df, x="Product", y="Score", color="#FFD700")
+        st.info("👋 **No quiz data found yet!** Go to the 'Product recommender' tab and click 'Find my perfect product' to generate your scoring graph."
         st.write("Thank you for doing this test!")
 
 
