@@ -10,29 +10,29 @@ def show_recommender():
     with col2:
         st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
 
-if "quiz_history" not in st.session_state:
-    st.session_state["quiz_history"] = []
+    if "quiz_history" not in st.session_state:
+        st.session_state["quiz_history"] = []
 
-with st.container(border=True):
-    user_hair = st.pills(
-        "Enter your hair type:",
-        ["Straight", "Wavy", "Curly", "Coily"]
-    )
+    with st.container(border=True):
+        user_hair = st.pills(
+            "Enter your hair type:",
+            ["Straight", "Wavy", "Curly", "Coily"]
+        )
 
-    user_scalp = st.pills(
-        "Enter scalp type:",
-        ["Oily", "Balanced", "Dry", "Combination"]
-    )
+        user_scalp = st.pills(
+            "Enter scalp type:",
+            ["Oily", "Balanced", "Dry", "Combination"]
+        )
 
-    user_thickness = st.pills(
-        "Enter Hair Thickness:",
-        ["Thin", "Fine", "Medium", "Thick"]
-    )
-
-    user_porosity = st.pills(
-        "Enter Hair porosity:",
-        ["Low", "Medium", "High"]
-    )
+        user_thickness = st.pills(
+            "Enter Hair Thickness:",
+            ["Thin", "Fine", "Medium", "Thick"]
+        )
+    
+        user_porosity = st.pills(
+            "Enter Hair porosity:",
+            ["Low", "Medium", "High"]
+        )
 
 PRODUCT_BRANDS = {
     "Murumuru Butter": "Dr Adorable Inc",
