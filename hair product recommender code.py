@@ -2,8 +2,8 @@
 import pandas as pd
 import time  
 def show_recommender():
-col1, col2 = st.columns([2, 1])
-with col1:
+    col1, col2 = st.columns([2, 1])
+    with col1:
     st.title("🌱 Plant-Based Hair Product Recommender")
     st.write("Find the right product for you")
 
