@@ -238,14 +238,14 @@ def show_routine():
 
 st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 def hair_graph():
-if st.session_state.get("current_scores") is not None:
-    st.markdown("### How your hair was scored:")
-    chart_df = pd.DataFrame(
-        list(st.session_state["current_scores"].items()), 
-        columns=["Product", "Score"]
-    )
-    st.bar_chart(data=chart_df, x="Product", y="Score", color="#FFD700")
-    st.write("Thank you for doing this test!")
+    if st.session_state.get("current_scores") is not None:
+        st.markdown("### How your hair was scored:")
+        chart_df = pd.DataFrame(
+            list(st.session_state["current_scores"].items()), 
+            columns=["Product", "Score"]
+        )
+        st.bar_chart(data=chart_df, x="Product", y="Score", color="#FFD700")
+        st.write("Thank you for doing this test!")
 
 
 pages = {
