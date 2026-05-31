@@ -100,9 +100,9 @@ def get_recommendation(hair, scalp, thickness, porosity):
         st.session_state["quiz_history"] = []
         st.rerun()
 
-    st.markdown("---")
+        st.markdown("---")
     
-    if st.button("Find my perfect product", type="primary"):
+        if st.button("Find my perfect product", type="primary"):
         
         if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
             st.error("⚠️ **Missing information:** Please select an option for ALL 4 questions before running the recommendation engine!")
