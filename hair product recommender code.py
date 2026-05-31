@@ -1,6 +1,7 @@
 ﻿import streamlit as st
 import pandas as pd
 import time  
+def show_recommender():
 col1, col2 = st.columns([2, 1])
 with col1:
     st.title("🌱 Plant-Based Hair Product Recommender")
@@ -162,7 +163,7 @@ if st.button("Find my perfect product", type="primary"):
 if st.button("reset quiz", type="secondary"):
    st.session_state["current_scores"] = None
    st.rerun()
-
+def show_rating():
 st.markdown("---")
 st.write("Rate your recommended product")
 rating = st.slider("How accurate does this recommended product feel for your hair?", 1, 5, 4)
@@ -181,7 +182,7 @@ if st.session_state["quiz_history"]:
 if st.button("Clear Quiz History", type="secondary"):
    st.session_state["quiz_history"] = []
    st.rerun()
-
+def show_glossary
 st.subheader("Don't understand any of these terms?, check out this educational resource")
 
 with st.expander("What is Hair porosity"):
@@ -199,6 +200,7 @@ with  st.expander("What are the scalp types"):
           * **Balanced scalp:**This is when there's the perfect amount of natural sebum production, and this is a healthy scalp.
           * **Combination scalp:**This means there's different sebum activity in different areas. Some areas may be dry and some may be oily.
           """)
+def show_routine():
 st.subheader("Hair care routine for each type of hair")
 
 with st.expander("Straight hair routine"):
