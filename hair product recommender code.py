@@ -7,8 +7,8 @@ def show_recommender():
         st.title("🌱 Plant-Based Hair Product Recommender")
         st.write("Find the right product for you")
 
-with col2:
-    st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
+    with col2:
+        st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
 
 if "quiz_history" not in st.session_state:
     st.session_state["quiz_history"] = []
