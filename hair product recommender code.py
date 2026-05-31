@@ -243,16 +243,16 @@ if st.session_state.get("current_scores") is not None:
 
 pages = {
     "Find my perfect product quiz": [
-        sl.Page(show_recommender, title="Product recommender"),
+        st.Page(show_recommender, title="Product recommender"),
     ],
 
     "Rating my product": [
-        sl.page(show_rating, title="Product feedback"),
+        st.Page(show_rating, title="Product feedback"),
     ],
 
     "Information": [
-        sl.page(show_glossary, title="Hair terms"),
-        sl.page("show_routine, title="Hair routines"),
+        st.Page(show_glossary, title="Hair terms"),
+        st.Page(show_routine, title="Hair routines"),
         ],
 }
 
