@@ -120,7 +120,7 @@ if st.button("Find my perfect product", type="primary"):
        
         col_metric1, col_metric2 = st.columns(2)
         with col_metric1:
-            st.metric(label="Match Compatibility", value=f"{match_percentage}%", delta="This is the product you matched the most with")
+            st.metric(label="Match Compatibility", value=f"{match_percentage}%", delta="Most compatible Product for you")
         with col_metric2:
             st.metric(label="Recommended Brand", value=final_brand)
             
