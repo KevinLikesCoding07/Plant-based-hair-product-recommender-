@@ -90,11 +90,11 @@ def get_recommendation(hair, scalp, thickness, porosity):
     
     return best_product, best_brand, scores
     if st.session_state["quiz_history"]:
-        st.markdown("---")
-        st.subheader(" Session Comparison Matrix")
-        st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
-        df = pd.DataFrame(st.session_state["quiz_history"])
-        st.dataframe(df, use_container_width=True)
+       st.markdown("---")
+       st.subheader(" Session Comparison Matrix")
+       st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
+       df = pd.DataFrame(st.session_state["quiz_history"])
+       st.dataframe(df, use_container_width=True)
 
     if st.button("Clear Quiz History", type="secondary"):
         st.session_state["quiz_history"] = []
