@@ -5,7 +5,7 @@ import random
 
 
 st.set_page_config(
-    page_title="Élixir Botanique | Luxury Hair Suite",
+    page_title="Plant-based hair product recommender",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -420,5 +420,3 @@ with st.sidebar:
 pages_mapping[selected_page]()
 
 
-st.markdown("---")
-st.markdown("<p style='text-align: center; color: #64748b;'>Élixir Botanique &copy; 2026 | Luxury Hair Science Suite</p>", unsafe_allow_html=True)
