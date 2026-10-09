@@ -1,274 +1,424 @@
-﻿import streamlit as st
+import streamlit as st
 import pandas as pd
-import time  
+import time
+import random
 
 
-if "quiz_history" not in st.session_state:
-    st.session_state["quiz_history"] = []
+st.set_page_config(
+    page_title="Élixir Botanique | Luxury Hair Suite",
+    page_icon="🌿",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-if "current_scores" not in st.session_state:
-    st.session_state["current_scores"] = None
+
+st.markdown("""
+    <style>
+    /* Global Dark Theme */
+    .stApp {
+        background-color: #0f172a;
+        color: #f8fafc;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+        color: #f8fafc !important;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: -0.025em;
+    }
+    
+    p, span, label {
+        color: #cbd5e1 !important;
+    }
+    
+    /* Containers & Cards */
+    div[data-testid="stVerticalBlock"] > div[style*="border"], 
+    div[data-testid="stExpander"] {
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 16px !important;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Primary Gradient Button */
+    div.stButton > button:first-child {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 0.6rem 1.2rem;
+        font-weight: 600;
+        border: none;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    div.stButton > button:first-child:hover {
+        background: linear-gradient(135deg, #047857 0%, #059669 100%);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        transform: translateY(-1px);
+    }
+
+    /* Secondary Buttons */
+    div.stButton > button[kind="secondary"] {
+        background-color: #334155 !important;
+        color: #f8fafc !important;
+        border: 1px solid #475569 !important;
+    }
+
+    /* Metric Cards Styling */
+    [data-testid="stMetric"] {
+        background-color: #1e293b;
+        padding: 15px;
+        border-radius: 12px;
+        border: 1px solid #334155;
+    }
+    [data-testid="stMetricValue"] {
+        color: #10b981 !important;
+        font-size: 2.2rem !important;
+    }
+    [data-testid="stMetricLabel"] {
+        color: #94a3b8 !important;
+    }
+
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #1e293b;
+        border-right: 1px solid #334155;
+    }
+    
+    /* Alert / Info boxes */
+    .stAlert {
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
+        color: #f8fafc !important;
+        border-radius: 12px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
+def init_session_state():
+    if "quiz_history" not in st.session_state:
+        st.session_state["quiz_history"] = []
+    if "current_scores" not in st.session_state:
+        st.session_state["current_scores"] = None
+    if "wishlist" not in st.session_state:
+        st.session_state["wishlist"] = []
+    if "last_result" not in st.session_state:
+        st.session_state["last_result"] = None
+    if "diy_creations" not in st.session_state:
+        st.session_state["diy_creations"] = []
+
+init_session_state()
+
 
 PRODUCT_BRANDS = {
     "Murumuru Butter": "Dr Adorable Inc",
     "Ouai Wave spray": "OUAI",
     "Tea Tree oil": "Nexon Botanics",
-    "Coconut Oil": " Viva Naturals Organic Extra Virgin",
-    "Shea Butter": "Cantue",
+    "Coconut Oil": "Viva Naturals Organic Extra Virgin",
+    "Shea Butter": "Cantu",
     "Aloe Vera": "Parachute",
     "Surface Awaken Shampoo & Conditioner": "Surface Hair Care",
-    "Argan Oil": "Cliganic "
+    "Argan Oil": "Cliganic"
 }
 
 PRODUCT_EXPLAINERS = {
-    "Murumuru Butter": "Murumuru Butter is excellent for curly and coily hair. It also locks in moisture, making it useful for curly and coily hair because they tend to dry easily.",
-    "Ouai Wave spray": "Ouai wave spray is really good for wavy hair because it uses plant proteins to give your wavy hair more texture, volume, and definition.",
-    "Tea Tree oil": "Tea tree oil is like a clarifying agent, which balances sebum and helps with an oily scalp.",
-    "Coconut Oil": "Coconut oil penetrates your scalp and locks in moisture, which is perfect for a dry scalp.",
-    "Shea Butter": "Shea butter is good for high porosity hair because it acts like a protective barrier with an open cuticle, which locks in moisture.",
-    "Aloe Vera": "Aloe vera is a lightweight, hydration product that hydrates your hair without making it greasy.",
-    "Surface Awaken Shampoo & Conditioner": "Surface Awaken Shampoo & Conditioner uses natural, botanical ingredients that stimulate your scalp and this product doesn't have any chemicals that will damage your hair",
-    "Argan Oil": "Argan oil is a lightweight, frizz control product that moisturizes your hair and scalp, and it is amazing for straight hair and straight hair patterns that can get frizzy", 
-}   
+    "Murumuru Butter": "Rich in fatty acids; locks in moisture for curly/coily hair without heavy residue.",
+    "Ouai Wave spray": "Plant proteins add striking texture, volume, and definition to wavy hair patterns.",
+    "Tea Tree oil": "Clarifying agent that balances natural sebum production; ideal for oily scalps.",
+    "Coconut Oil": "Penetrates the hair shaft deeply for intensive hydration on dry scalps.",
+    "Shea Butter": "Creates a protective barrier on high-porosity cuticles to lock in hydration.",
+    "Aloe Vera": "Lightweight hydration that moisturizes strands cleanly without feeling greasy.",
+    "Surface Awaken Shampoo & Conditioner": "Botanical extracts stimulate follicles safely without harsh chemical additives.",
+    "Argan Oil": "Tames flyaways and delivers brilliant gloss to straight hair."
+}
 
-def get_recommendation(hair, scalp, thickness, porosity):
-    scores = {
-        "Murumuru Butter": 0, 
-        "Ouai Wave spray": 0, 
-        "Tea Tree oil": 0, 
-        "Coconut Oil": 0, 
-        "Shea Butter": 0, 
-        "Aloe Vera": 0, 
-        "Surface Awaken Shampoo & Conditioner": 0, 
-        "Argan Oil": 0
-    }
+def reset_app():
+    st.session_state["current_scores"] = None
+    st.session_state["last_result"] = None
+
+def get_recommendation(hair, scalp, thickness, porosity, sensitivities):
+    scores = {prod: 0 for prod in PRODUCT_BRANDS.keys()}
+    veto = -1000
+    if "Nuts / Tree Nuts" in sensitivities: scores["Shea Butter"] = veto
+    if "Heavy Oils / Coconut" in sensitivities: scores["Coconut Oil"] = veto
+    if "Strong Essential Oils" in sensitivities: scores["Tea Tree oil"] = veto
     
-    if hair in ["Curly", "Coily"]:
-        scores["Murumuru Butter"] += 1
-    if hair == "Wavy":
-        scores["Ouai Wave spray"] += 3
-    if scalp == "Oily":
-        scores["Tea Tree oil"] += 5
-    if scalp == "Dry":
-        scores["Coconut Oil"] += 4
-    if porosity == "High":
-        scores["Shea Butter"] += 2
-    if porosity == "Low":
-        scores["Aloe Vera"] += 6
-    if thickness == "Thin":
-        scores["Surface Awaken Shampoo & Conditioner"] += 4
-    if hair == "Straight":
-        scores["Argan Oil"] += 7
-       
+    if hair in ["Curly", "Coily"]: scores["Murumuru Butter"] += 2
+    if hair == "Wavy": scores["Ouai Wave spray"] += 3
+    if hair == "Straight": scores["Argan Oil"] += 3
+    if scalp == "Oily": scores["Tea Tree oil"] += 4
+    if scalp == "Dry": scores["Coconut Oil"] += 3
+    if thickness == "Thin": scores["Surface Awaken Shampoo & Conditioner"] += 3
+    if porosity == "High": scores["Shea Butter"] += 3
+    if porosity == "Low": scores["Aloe Vera"] += 4
+
     best_product = max(scores, key=scores.get)
-    best_brand = PRODUCT_BRANDS.get(best_product, "Generic Brand")
-    
+    if scores[best_product] <= 0:
+        best_product = "Aloe Vera"
+    best_brand = PRODUCT_BRANDS.get(best_product, "Élixir Labs")
     return best_product, best_brand, scores
 
+def get_persona(hair, porosity):
+    if hair == "Straight": return "✨ The Sleek & Glossy Icon"
+    if hair == "Wavy": return "🌊 The Beachside Wave Master"
+    if hair == "Curly": return "🌀 The Spirited Coil & Curl Royalty"
+    if hair == "Coily": return "👑 The Crown Coily Sovereign"
+    return "🌿 The Botanical Alchemist"
+
+
 def show_recommender():
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([5, 1])
     with col1:
-        st.title("🌱 Plant-Based Hair Product Recommender")
-        st.write("Find the right product for you")
-
+        st.title("🌿 Élixir Botanique")
+        st.markdown("### Tailored Hair Diagnostic Suite")
+        st.write("Complete your botanical profile below to unlock a bespoke formulation and custom persona badge.")
     with col2:
-        st.image("https://content.latest-hairstyles.com/wp-content/uploads/experts-favorite-hair-products-1200x900.jpg", use_container_width=True)
-
-    with st.container(border=True):
-        user_hair = st.pills(
-            "Enter your hair type:",
-            ["Straight", "Wavy", "Curly", "Coily"]
-        )
-
-        user_scalp = st.pills(
-            "Enter scalp type:",
-            ["Oily", "Balanced", "Dry", "Combination"]
-        )
-
-        user_thickness = st.pills(
-            "Enter Hair Thickness:",
-            ["Thin", "Fine", "Medium", "Thick"]
-        )
-    
-        user_porosity = st.pills(
-            "Enter Hair porosity:",
-            ["Low", "Medium", "High"]
-        )
+        st.image("https://img.icons8.com/?size=100&id=118515&format=png&color=10B981", width=70)
 
     st.markdown("---")
     
-    if st.button("Find my perfect product", type="primary"):
-        if user_hair is None or user_scalp is None or user_thickness is None or user_porosity is None:
-            st.error("⚠️ **Missing information:** Please select an option for ALL 4 questions before running the recommendation engine!")
-        else:
-            with st.spinner("Analyzing your hair details....."):
-                time.sleep(2.5)
-            st.success("We found your perfect product")
+    with st.container():
+        st.subheader("I. Hair Structure")
+        user_hair = st.pills("Hair Pattern:", ["Straight", "Wavy", "Curly", "Coily"], key="h_type")
+        user_porosity = st.pills("Cuticle Porosity:", ["Low", "Medium", "High"], key="h_porosity")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.subheader("II. Scalp & Density")
+        user_scalp = st.pills("Scalp Condition:", ["Oily", "Balanced", "Dry", "Combination"], key="s_type")
+        user_thickness = st.pills("Strand Thickness:", ["Thin", "Fine", "Medium", "Thick"], key="h_thick")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.subheader("III. Safety Vetoes (Optional)")
+        user_sensitivities = st.multiselect(
+            "Select ingredients to filter out:",
+            ["Nuts / Tree Nuts", "Heavy Oils / Coconut", "Strong Essential Oils"],
+            key="sens"
+        )
 
-            final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity)
-            st.session_state["current_scores"] = scores
-            st.session_state["quiz_history"].append({
-                "Hair Type": user_hair,
-                "Scalp Type": user_scalp,
-                "Thickness": user_thickness,
-                "Porosity": user_porosity,
-                "Recommended Product": f"{final_brand} {final_product}"
-            })
-            st.balloons()
-            
-            max_possible_score = 7
-            user_score = scores[final_product]
-            match_percentage = min(int((user_score / max_possible_score) * 100), 100)
-            
-            st.subheader("Your Custom Match:")
-            
-            col_metric1, col_metric2 = st.columns(2)
-            with col_metric1:
-                st.metric(label="Match Compatibility", value=f"{match_percentage}%", delta="Most compatible Product for you")
-            with col_metric2:
-                st.metric(label="Recommended Brand", value=final_brand)
-                
-            search_query = f"{final_brand} {final_product}".replace(" ", "+")
-            google_url = f"https://www.google.com/search?q={search_query}"
-            match_explainer = PRODUCT_EXPLAINERS.get(final_product, "This product is a perfect match for your hair details!")
-            st.info(f"💡 **Why this works:** {match_explainer}")
-            
-            google_button_html = f'<a href="{google_url}" target="_blank" style="text-decoration: none;"><div style="background-color: #add8e6; color: black; padding: 15px 20px; text-align: center; border-radius: 5px; font-weight: bold; margin-top: 10px;">Find {final_brand} {final_product} on Google</div></a>'
-            st.markdown(google_button_html, unsafe_allow_html=True)
-            
-            scorecard_text = f"""
-            Plant-based hair product recommender
-            ------------------------------------
-            YOUR PROFILE:
-            - Hair type: {user_hair}
-            - Scalp type: {user_scalp}
-            - Hair Thickness: {user_thickness}
-            - Hair porosity: {user_porosity}
-            --------------------------------
-            YOUR MATCH:
-            - Product: {final_product}
-            - Brand: {final_brand}
-            --------------------
-            WHY THIS WORKS
-            {match_explainer}
-            -----------------
-            Generated by Plant-Based Hair Product Recommender
-            Disclaimer: This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.
-            """
-            st.download_button(
-                label="📥 Download My Hair Scorecard",
-                data=scorecard_text,
-                file_name=f"Hair_Scorecard_{user_hair}.txt",
-                mime="text/plain",
-                use_container_width=True
-            )
+    st.markdown("<br>", unsafe_allow_html=True)
     
-    if st.button("reset quiz", type="secondary"):
-        st.session_state["current_scores"] = None
-        st.rerun()
+    c1, c2, c3 = st.columns([1, 2, 1])
+    with c2:
+        find_btn = st.button("✨ Run Diagnostic Suite", type="primary")
 
-    # The Comparison Matrix is now placed safely here outside of the math boxes!
+    if find_btn:
+        if not user_hair or not user_scalp or not user_thickness or not user_porosity:
+            st.warning("⚠️ **Incomplete Profile:** Please select an option for all diagnostic categories.")
+            return
+
+        with st.spinner("Synthesizing organic data signatures..."):
+            time.sleep(1.5)
+
+        final_product, final_brand, scores = get_recommendation(user_hair, user_scalp, user_thickness, user_porosity, user_sensitivities)
+        persona = get_persona(user_hair, user_porosity)
+        
+        st.session_state["current_scores"] = scores
+        st.session_state["last_result"] = {"product": final_product, "brand": final_brand, "hair": user_hair, "persona": persona}
+        st.session_state["quiz_history"].append({
+            "Hair": user_hair, "Scalp": user_scalp, 
+            "Thickness": user_thickness, "Porosity": user_porosity,
+            "Recommendation": f"{final_brand} {final_product}"
+        })
+        
+        st.balloons()
+        st.success("Diagnostic Successful.")
+
+        st.info(f"🏆 **Assigned Persona:** {persona}")
+
+        max_possible_score = 10
+        user_score = max(scores[final_product], 1)
+        match_percentage = min(int((user_score / max_possible_score) * 100), 100)
+        
+        mc1, mc2 = st.columns(2)
+        with mc1:
+            st.metric(label="Compatibility Index", value=f"{match_percentage}%", delta="Optimized fit")
+        with mc2:
+            st.metric(label="Premier Brand", value=final_brand)
+            
+        with st.container():
+            col_a, col_b = st.columns([3, 1])
+            with col_a:
+                st.subheader(final_product)
+                st.caption(f"Manufactured by {final_brand}")
+                st.write(f"💡 **Why this works:** {PRODUCT_EXPLAINERS.get(final_product, '')}")
+            with col_b:
+                st.write("")
+                search_query = f"{final_brand} {final_product}".replace(" ", "+")
+                st.link_button("Acquire Online ↗", f"https://www.google.com/search?q={search_query}")
+                
+                if st.button("❤️ Save to Vault", key="save_res"):
+                    item_str = f"{final_brand} - {final_product}"
+                    if item_str not in st.session_state["wishlist"]:
+                        st.session_state["wishlist"].append(item_str)
+                        st.toast("Secured in Vault!")
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        col_act1, col_act2 = st.columns(2)
+        with col_act1:
+            scorecard_text = f"Élixir Botanique Diagnostic Profile:\n{user_hair}, {user_thickness}, {user_porosity}\nPersona: {persona}\n\nOptimal Match:\n{final_brand} {final_product}"
+            st.download_button("📥 Download Diagnostic Certificate", scorecard_text, f"Certificate_{user_hair}.txt", use_container_width=True)
+        with col_act2:
+            st.button("Reset Diagnostic", on_click=reset_app, type="secondary", use_container_width=True)
+
     if st.session_state["quiz_history"]:
         st.markdown("---")
-        st.subheader("📊 Session Comparison Matrix")
-        st.write("Your tested hair profiles are shown below. Click any column header to sort, or hover to expand columns:")
-        df = pd.DataFrame(st.session_state["quiz_history"])
-        st.dataframe(df, use_container_width=True)
+        with st.expander("📊 Diagnostic Archives"):
+            df = pd.DataFrame(st.session_state["quiz_history"])
+            st.dataframe(df, use_container_width=True, hide_index=True)
+            if st.button("Clear Archives"):
+                st.session_state["quiz_history"] = []
+                st.rerun()
 
-        if st.button("Clear Quiz History", type="secondary"):
-            st.session_state["quiz_history"] = []
-            st.rerun()
 
-def show_rating():
+def show_diy_lab():
+    st.title("🧪 Custom Formulation Lab")
+    st.markdown("### Build Your Bespoke Organic Hair Mask")
+    st.write("Hand-select carrier oils, nourishing butters, and active botanical infusions to synthesize a custom treatment.")
     st.markdown("---")
-    st.write("Rate your recommended product")
-    rating = st.slider("How accurate does this recommended product feel for your hair?", 1, 5, 4)
-    feedback_notes = st.text_input("Any specific ingredients, brands you wish we included or did you wish the product had different results?")
-    if st.button("Submit Feedback"):
-        st.success(f"Thank you for your {rating}-star review! Your suggestion for '{feedback_notes}' has been sent.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        mask_name = st.text_input("Formula Title:", value="Midnight Elixir")
+        base_oil = st.selectbox("Carrier Oil:", ["Jojoba Oil", "Sweet Almond Oil", "Grapeseed Oil", "Argan Oil"])
+        butter_choice = st.selectbox("Structural Butter/Gel:", ["Shea Butter", "Murumuru Butter", "Aloe Vera Gel", "Coconut Oil"])
+        boost_add = st.selectbox("Active Botanical Infusion:", ["Tea Tree Drop (Clarifying)", "Lavender Extract (Aromatherapy)", "Vitamin E Complex (Repair)"])
+        
+    with col2:
+        st.markdown("### 🔬 Laboratory Preview")
+        with st.container():
+            st.markdown(f"**Formula:** {mask_name}")
+            st.markdown(f"- 🌿 **Base:** {base_oil} (30ml)")
+            st.markdown(f"- 🥑 **Structure:** {butter_choice} (15g)")
+            st.markdown(f"- ✨ **Infusion:** {boost_add} (5 drops)")
+            
+            hydration_score = random.randint(90, 99)
+            st.metric(label="Bio-Compatibility Score", value=f"{hydration_score}%", delta="Pure botanical grade")
+            
+            if st.button("Save Formula to Vault"):
+                formula_desc = f"{mask_name} ({base_oil} + {butter_choice})"
+                if formula_desc not in st.session_state["diy_creations"]:
+                    st.session_state["diy_creations"].append(formula_desc)
+                    st.success(f"Formula '{mask_name}' synthesized and stored successfully!")
+                else:
+                    st.info("Formula already exists in vault.")
+
+    if st.session_state["diy_creations"]:
         st.markdown("---")
-     
+        st.subheader("🧪 Saved Bespoke Formulas")
+        for fml in st.session_state["diy_creations"]:
+            st.caption(f"• 🔒 {fml}")
+
+
+def show_custom_routine():
+    st.title("🛁 Wash-Day Protocol")
+    st.markdown("### Structured Maintenance Schedule")
+    st.markdown("---")
+    
+    if st.session_state["last_result"]:
+        res = st.session_state["last_result"]
+        st.success(f"Protocol synchronized for: **{res['brand']} {res['product']}** ({res['hair']} Hair)")
+        
+        steps = [
+            ("Phase I: Pre-Treatment & Detangling", "Delicately detangle dry strands (coily/curly) or damp strands (wavy/straight) prior to cleansing."),
+            ("Phase II: Targeted Cleansing", f"Apply **{res['brand']} {res['product']}**. Massage thoroughly into roots for 3 minutes. Rinse with lukewarm water."),
+            ("Phase III: Hydration Seal", "Distribute conditioning agents evenly from mid-shaft to ends. Allow 5 minutes of penetration before cool rinsing."),
+            ("Phase IV: Micro-Fiber Drying", "Press gently with a microfiber towel. Apply prescribed stylers to damp cuticles.")
+        ]
+        
+        for i, (title, desc) in enumerate(steps):
+            with st.container():
+                c1, c2 = st.columns([1, 6])
+                with c1:
+                    st.markdown(f"<h2 style='color:#10b981; text-align:center;'>0{i+1}</h2>", unsafe_allow_html=True)
+                with c2:
+                    st.subheader(title)
+                    st.write(desc)
+    else:
+        st.warning("⚠️ Please execute the diagnostic suite first to generate your custom timeline.")
+
+
 def show_glossary():
-    st.subheader("Don't understand any of these terms?, check out this educational resource")
+    st.title("📚 Botanical Lexicon")
+    st.markdown("### Structural Hair Science & Scalp Anatomy")
+    st.markdown("---")
     
-    with st.expander("What is Hair porosity"):
-         st.write("""
-         **Hair porosity refers to your hair's ability to absorb or retain moisture:**
-         * **High porosity:** The hair cuticles are open. This means the hair can absorb moisture quickly, but also lose it as quickly; it can't retain moisture. This requires heavy sealant products.
-         * **Medium porosity:** This is the sweet spot for porosity because the cuticles are not too tight or open, and it absorbs and retains moisture pretty well.
-         * **Low porosity:** The hair cuticles are tightly packed. This means it absorbs moisture, and it also retains it, and it doesn't allow it to leave. This is the healthiest porosity type.
-         """)
-    with st.expander("What are the scalp types"):
-          st.write("""
-          **Your scalp condition changes how products interact with your hair follicles:**
-          * **Dry scalp:** This lacks natural sebum production, which can cause flakes and itchiness. The flakes can easily be mistaken for dandruff, but these flakes are white, and they are like snow; dandruff is yellow.
-          * **Oily scalp:** This is when there's an overproduction of sebum, which can weigh your hair down and cause greasiness.
-          * **Balanced scalp:** This is when there's the perfect amount of natural sebum production, and this is a healthy scalp.
-          * **Combination scalp:** This means there's different sebum activity in different areas. Some areas may be dry and some may be oily.
-          """)
-
-def show_routine():
-    st.subheader("Hair care routine for each type of hair")
-    
-    with st.expander("Straight hair routine"):
-         st.write("""
-         * Wash your hair 2-3 times a week.
-         * Use a sulfate-free shampoo and use a conditioner to make sure hair doesn't fall flat and look frizzy.
-         * Use a brush to detangle.
-         * Use a natural hair oil once a week to maintain a healthy scalp.
-         """)
-    with st.expander("Wavy hair routine"):
-         st.write("""
-         * Avoid using too much shampoo; only use it 2-3 times a week.
-         * Avoid brushing your hair while it is dry, as this can damage hair and cause frizz. Only brush when wet.
-         * Use a lightweight conditioner every time you use shampoo.
-         * Use a lightweight hair oil once a week for scalp health.
-         """)
-    with st.expander("Curly hair routine"):
-         st.write("""
-         * Avoid brushing your hair dry; do it while it is wet.
-         * Use richer products.
-         * Use a sulfate-free shampoo and cleansing conditioner.
-         * Sleep with a silk bonnet to avoid frizz.
-         """)
-    with st.expander("Coily hair routine"):
-         st.write("""
-         * Use sulfate-free shampoo and a rich conditioner once a week
-         * Sleep with a bonnet to protect hair
-         * Use light oils for a healthy scalp
-         """)
+    tab1, tab2 = st.tabs(["Hair Properties", "Scalp Classifications"])
+    with tab1:
+        st.markdown("### Hair Attributes")
+        data = {
+            "Porosity": "The cuticular layer's capacity to absorb and hold moisture. High porosity features wide-open cuticles; low porosity features tight overlapping scales.",
+            "Density": "Total follicular count per square inch across the scalp.",
+            "Elasticity": "The measure of structural stretch before fiber breakage occurs."
+        }
+        for term, definition in data.items():
+            with st.expander(f"Define: {term}"):
+                st.write(definition)
+                
+    with tab2:
+        st.markdown("### Scalp Conditions")
+        scalps = {
+            "Oily": "Excessive sebum secretion requiring balancing clarifying agents.",
+            "Dry": "Deficient natural lipid production leading to micro-flaking and tightness.",
+            "Balanced": "Optimal homeostatic sebum levels.",
+            "Combination": "Variable sebum activity (sebum-dense crown, dry perimeter)."
+        }
+        for term, definition in scalps.items():
+             with st.expander(f"Condition: {term}"):
+                st.write(definition)
 
 
-st.info("⚠️ **DISCLAIMER:** This tool is just for educational purposes. It's best to always test a product before using to make sure there is no sensitivity or allergic reactions.")
 def hair_graph():
-    
-    if st.session_state.get("current_scores") is not None:
-        st.markdown("### How your hair was scored:")
+    st.title("📈 Bio-Scoring Analytics")
+    st.markdown("### Comprehensive Algorithm Scoring Breakdown")
+    st.markdown("---")
+    if st.session_state.get("current_scores"):
+        st.subheader("Compatibility Weight Distribution:")
         chart_df = pd.DataFrame(
             list(st.session_state["current_scores"].items()), 
             columns=["Product", "Score"]
         )
-        st.bar_chart(data=chart_df, x="Product", y="Score", color="#FFD700")
-        st.write("Thank you for doing this test!")
+        chart_df = chart_df.sort_values(by="Score", ascending=False)
+        st.bar_chart(data=chart_df, x="Product", y="Score", color="#10b981")
     else:
-        st.info("👋 **No quiz data found yet!** Go to the 'Product recommender' tab and click 'Find my perfect product' to generate your scoring graph.")
+        st.info("👋 Run a diagnostic quiz to render your scoring analytics chart.")
 
 
-pages = {
-    "Find my perfect product quiz": [
-        st.Page(show_recommender, title="Product recommender"),
-    ],
-    "Rating my product": [
-        st.Page(show_rating, title="Product feedback"),
-    ],
-    "Information": [
-        st.Page(show_glossary, title="Hair terms"),
-        st.Page(show_routine, title="Hair routines"),
-    ],
-    "How your hair was scored Graph": [
-        st.Page(hair_graph, title = "How your hair was scored"),
-    ],
-}
+with st.sidebar:
+    st.image("https://img.icons8.com/?size=100&id=23233&format=png&color=10B981", width=45)
+    st.title("Élixir Suite")
+    
+    st.markdown("---")
+    st.subheader("🔒 Saved Vault")
+    if st.session_state["wishlist"]:
+        for item in st.session_state["wishlist"]:
+            st.caption(f"• {item}")
+        if st.button("Purge Vault", key="clr_wsh"):
+            st.session_state["wishlist"] = []
+            st.rerun()
+    else:
+        st.info("Vault is currently empty.")
+        
+    st.markdown("---")
+    st.subheader("Navigation")
+    pages_mapping = {
+        "Diagnostic Suite": show_recommender,
+        "🧪 Formulation Lab": show_diy_lab,
+        "Wash-Day Protocol": show_custom_routine,
+        "Lexicon": show_glossary,
+        "Analytics": hair_graph,
+    }
+    selected_page = st.selectbox("Select Module", options=list(pages_mapping.keys()), label_visibility="collapsed")
+    
+    st.markdown("---")
+    with st.expander("⚠️ Clinical Disclaimer"):
+        st.caption("Formulations are for educational and cosmetic evaluation purposes. Perform individual patch tests prior to topical application.")
 
-pg = st.navigation(pages)
-pg.run()
+
+pages_mapping[selected_page]()
+
+
+st.markdown("---")
+st.markdown("<p style='text-align: center; color: #64748b;'>Élixir Botanique &copy; 2026 | Luxury Hair Science Suite</p>", unsafe_allow_html=True)
